@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping_Cart_UI.Models;
+using Shopping_Cart_UI.Repository;
 using System.Diagnostics;
 
 namespace Shopping_Cart_UI.Controllers
@@ -7,15 +8,18 @@ namespace Shopping_Cart_UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHomeRepository _homeRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IHomeRepository homeRepository)
         {
             _logger = logger;
+            _homeRepository = homeRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index( string searchTerm = "", int genreId = 0)
         {
-            return View();
+            IEnumerable<Book> books= await _homeRepository.GetBooks(searchTerm, genreId);    
+            return View(books);
         }
 
         public IActionResult Privacy()
