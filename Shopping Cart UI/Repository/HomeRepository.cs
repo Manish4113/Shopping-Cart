@@ -13,6 +13,11 @@ namespace Shopping_Cart_UI.Repository
             _db = db;
         }
 
+        public async Task<IEnumerable<Genre>> Genres()
+        {
+            return await _db.Genres.ToListAsync();
+        }
+
         public async Task<IEnumerable<Book>> GetBooks(string searchTerm = "", int genreId = 0)
         {
             searchTerm=searchTerm.ToLower();
@@ -28,7 +33,7 @@ namespace Shopping_Cart_UI.Repository
                                                  BookName = book.BookName,
                                                  GenreId = book.GenreId,
                                                  Price = book.Price,
-                                                 GenreName = book.GenreName,
+                                                 GenreName = genre.GenreName,
                                              }
                 ).ToListAsync();
 

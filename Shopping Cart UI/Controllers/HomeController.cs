@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping_Cart_UI.Models;
+using Shopping_Cart_UI.Models.DTO;
 using Shopping_Cart_UI.Repository;
 using System.Diagnostics;
 
@@ -18,8 +19,18 @@ namespace Shopping_Cart_UI.Controllers
 
         public async Task<IActionResult> Index( string searchTerm = "", int genreId = 0)
         {
-            IEnumerable<Book> books= await _homeRepository.GetBooks(searchTerm, genreId);    
-            return View(books);
+
+            IEnumerable<Book> books= await _homeRepository.GetBooks(searchTerm, genreId);
+            IEnumerable<Genre> genres = await _homeRepository.Genres();
+            BookDisplayModel bookModel = new BookDisplayModel
+            {
+                Books=books,
+                Genres=genres,
+                SearchTerm=searchTerm,  
+                GenreId=genreId 
+            };
+
+            return View(bookModel);
         }
 
         public IActionResult Privacy()
