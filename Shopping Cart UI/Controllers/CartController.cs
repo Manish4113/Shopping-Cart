@@ -38,7 +38,7 @@ namespace Shopping_Cart_UI.Controllers
             var totalItem= await _cartRepository.GetCartItemCount();    
             return Ok(totalItem);
         }
-
+        //Adding More Functinality.
     }
 }
 
